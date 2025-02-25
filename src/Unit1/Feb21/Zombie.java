@@ -31,6 +31,9 @@ public class Zombie {
         if (health <= 0) death();
     }
 
+    public String toString() {
+        return "Zombie: " + name;
+    }
 
     public void setHealth(int health) {
         this.health = health;
