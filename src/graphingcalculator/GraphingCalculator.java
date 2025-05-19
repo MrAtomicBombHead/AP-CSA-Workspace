@@ -1,10 +1,24 @@
 package graphingcalculator;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner;
+
 public class GraphingCalculator {
     
     public static void main(String[] args) {
-        Equation equation = new Equation("2*x^2+4*x+-1");
+        Scanner scanner = new Scanner(System.in);
 
-        System.out.println(equation.evaluate(1));
+        System.out.println("Enter equation");
+        String input = scanner.nextLine();
+
+        Equation equation = new Equation(input);
+
+        while(true) {
+            System.out.println("Enter an X value to solve for, or cancel to exit");
+            input = scanner.nextLine();
+            if (input.equals("cancel")) break;
+            System.out.println("Value is " + equation.evaluate(Double.parseDouble(input)));
+        }
     }
 }
