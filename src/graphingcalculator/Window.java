@@ -47,7 +47,7 @@ public class Window extends Canvas {
    public void kill() {
       frame.dispose();
    }
-   
+
    //getters
    public double getXWindow() { return this.xWindow; }
    public double getYWindow() { return this.yWindow; }

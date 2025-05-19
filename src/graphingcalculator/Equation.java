@@ -16,6 +16,7 @@ public class Equation implements Expression{
         
 
         ArrayList<String> strTerms = splitIgnoringParenthesis(strEquation, '+');
+        
 
         for (String strTerm : strTerms) {
             terms.add(new Term(strTerm));

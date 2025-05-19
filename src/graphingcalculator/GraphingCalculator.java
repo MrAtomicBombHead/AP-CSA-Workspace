@@ -4,18 +4,44 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
+import javax.swing.JOptionPane;
+
 public class GraphingCalculator {
+
+    private static ArrayList<Equation> equations = new ArrayList<>();
+    
+    private static double xWindow = 20;
+    private static double yWindow = 20;
+
+    private static Window window = new Window(500, 500, xWindow, yWindow, equations);
+
     
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        final String[] options = {"Add an equation"};
+        while (true) {
+            int select = JOptionPane.showOptionDialog(null, "Select an option", "GRAPHING CALCULATOR", 1, 3, null, options, null);
 
-        System.out.println("Enter equation");
-        String input = scanner.nextLine();
+            switch(select) {
+                case 0: 
+                    addEquation();
+                    break;
+                default: return;
+            }
+        }
+    }
 
-        Equation equation = new Equation(input);
+    private static void addEquation() {
+        System.out.println("Adding equation");
+        String equationInput = JOptionPane.showInputDialog(null, "Enter an equation", "GRAPHING CALCULATOR");
+        Equation equation = new Equation(equationInput);
+        try {equation.evaluate(0);} //test a number
+        catch (Exception e) {return;}
+        equations.add(equation);
+        refreshGraph();
+    }
 
-        ArrayList<Equation> equations = new ArrayList<>(Arrays.asList(equation));
-
-        Window window = new Window(500, 500, 20, 20, equations);
+    private static void refreshGraph() {
+        window.kill();
+        window = new Window(500, 500, xWindow, yWindow, equations);
     }
 }
