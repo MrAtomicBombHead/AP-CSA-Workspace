@@ -6,7 +6,9 @@ public class Term implements Expression {
     private final ArrayList<Factor> factors = new ArrayList<>();
 
     public Term(String strTerm) {
-        String[] strFactors = strTerm.split("\\*");
+        System.out.println("Term created: " + strTerm);
+
+        ArrayList<String> strFactors = Equation.splitIgnoringParenthesis(strTerm, '*');
 
         for (String strFactor : strFactors) {
             factors.add(new Factor(strFactor));

@@ -14,11 +14,8 @@ public class GraphingCalculator {
 
         Equation equation = new Equation(input);
 
-        while(true) {
-            System.out.println("Enter an X value to solve for, or cancel to exit");
-            input = scanner.nextLine();
-            if (input.equals("cancel")) break;
-            System.out.println("Value is " + equation.evaluate(Double.parseDouble(input)));
-        }
+        ArrayList<Equation> equations = new ArrayList<>(Arrays.asList(equation));
+
+        Window window = new Window(500, 500, 20, 20, equations);
     }
 }

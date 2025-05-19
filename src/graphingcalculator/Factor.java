@@ -20,13 +20,51 @@ public class Factor implements Expression {
             return;
         }
 
+        //parenthesis
+        if (strFactor.charAt(0) == '(') {
+            expression = new Equation(strFactor.substring(1, strFactor.length()-1));
+            return;
+        }
+
         //a power
         if (strFactor.contains("^")) {
             String[] parts = strFactor.split("\\^"); //parts[0] is base, parts[1] is exponent
             
-            Expression base = (x) -> parts[0].equals("x") ? x : Double.valueOf(parts[0]);
-            Expression exponent = (x) -> parts[1].equals("x") ? x : Double.valueOf(parts[1]);
+            Expression base = new Factor(parts[0]);
+            Expression exponent = new Factor(parts[1]);
             expression = (x) -> Math.pow(base.evaluate(x), exponent.evaluate(x));
+
+            return;
+        }
+
+        //sine
+        if (strFactor.contains("sin")) {
+            Expression contents = new Factor(strFactor.substring(3));
+            expression = (x) -> Math.sin(contents.evaluate(x));
+
+            return;
+        }
+
+        //cosine
+        if (strFactor.contains("cos")) {
+            Expression contents = new Factor(strFactor.substring(3));
+            expression = (x) -> Math.cos(contents.evaluate(x));
+
+            return;
+        }
+
+        //tangent
+        if (strFactor.contains("tan")) {
+            Expression contents = new Factor(strFactor.substring(3));
+            expression = (x) -> Math.tan(contents.evaluate(x));
+
+            return;
+        }
+
+        //log
+        if (strFactor.contains("log")) {
+            Expression contents = new Factor(strFactor.substring(3));
+            expression = (x) -> Math.log10(x);
 
             return;
         }

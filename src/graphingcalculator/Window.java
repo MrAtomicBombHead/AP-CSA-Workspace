@@ -35,7 +35,9 @@ public class Window extends Canvas {
          for (int ii = 0; ii < this.width; ii++) { //for each x-value (pixels)
             double X = ii-width/2; //transform to math coordinates
             X /= width/xWindow; //apply window
-            double Y = -equations.get(i).evaluate(X)*(height/yWindow) + height/2; //apply window and transform to math coordinates
+            double xValue = equations.get(i).evaluate(X);
+            if (Double.isNaN(xValue)) continue;
+            double Y = -xValue*(height/yWindow) + height/2; //apply window and transform to math coordinates
             
             g.fillRect(ii, (int)Y, 2, 2); //make a 1x1 rectangle at the point
          }
