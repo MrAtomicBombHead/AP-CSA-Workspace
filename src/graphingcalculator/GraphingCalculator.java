@@ -34,8 +34,11 @@ public class GraphingCalculator {
         System.out.println("Adding equation");
         String equationInput = JOptionPane.showInputDialog(null, "Enter an equation", "GRAPHING CALCULATOR");
         Equation equation = new Equation(equationInput);
-        try {equation.evaluate(0);} //test a number
-        catch (Exception e) {return;}
+        try {equation.evaluate(0);}
+        catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Invalid Equation");
+            return;
+        }
         equations.add(equation);
         refreshGraph();
     }

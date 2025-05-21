@@ -1,10 +1,12 @@
 package graphingcalculator;
 
+import java.util.ArrayList;
+
 public class Factor implements Expression {
 
     private Expression expression;
 
-    public Factor(String strFactor) {
+    public Factor(final String strFactor) {
         System.out.println("Factor created: " + strFactor);
 
         //just a number
@@ -14,26 +16,31 @@ public class Factor implements Expression {
             return;
         }
 
+        if (strFactor.charAt(0) == '-') {
+            expression = new Term("-1*" + strFactor.substring(1));
+            return;
+        }
+
         //just an x
         if (strFactor.equals("x")) {
             expression = (x) -> x;
             return;
         }
 
-        //parenthesis
-        if (strFactor.charAt(0) == '(') {
-            expression = new Equation(strFactor.substring(1, strFactor.length()-1));
+        //a power
+        if (strFactor.contains("^")) {
+            ArrayList<String> parts = splitIgnoringParenthesis(strFactor, '^'); //parts[0] is base, parts[1] is exponent
+            
+            Expression base = new Factor(parts.get(0));
+            Expression exponent = new Factor(parts.get(1));
+            expression = (x) -> Math.pow(base.evaluate(x), exponent.evaluate(x));
+
             return;
         }
 
-        //a power
-        if (strFactor.contains("^")) {
-            String[] parts = strFactor.split("\\^"); //parts[0] is base, parts[1] is exponent
-            
-            Expression base = new Factor(parts[0]);
-            Expression exponent = new Factor(parts[1]);
-            expression = (x) -> Math.pow(base.evaluate(x), exponent.evaluate(x));
-
+        //parenthesis
+        if (strFactor.charAt(0) == '(') {
+            expression = new Equation(strFactor.substring(1, strFactor.length()-1));
             return;
         }
 
@@ -78,6 +85,29 @@ public class Factor implements Expression {
             return false;
         }
     } 
+
+    public static ArrayList<String> splitIgnoringParenthesis(String equation, char splitter) {
+        ArrayList<String> strTerms = new ArrayList<>();
+        int previousSplit = 0;
+        for (int i = 0; i < equation.length(); i++) {
+            if (equation.charAt(i) == '(') { //skips through parenthesis
+                while (true) {
+                    i++;
+                    if (equation.charAt(i) == ')') break;
+                }
+            } else {
+                if (equation.charAt(i) == splitter) {
+                    String term = equation.substring(previousSplit, i);
+                    strTerms.add(term);
+                    previousSplit = i+1;
+                }
+            }
+        }
+        String term = equation.substring(previousSplit);
+        strTerms.add(term);
+
+        return strTerms;
+    }
     
     @Override
     public double evaluate(double x) {

@@ -15,7 +15,7 @@ public class Equation implements Expression{
 
         
 
-        ArrayList<String> strTerms = splitIgnoringParenthesis(strEquation, '+');
+        ArrayList<String> strTerms = splitIgnoringParenthesis(strEquation);
         
 
         for (String strTerm : strTerms) {
@@ -23,7 +23,7 @@ public class Equation implements Expression{
         }
     }
 
-    public static ArrayList<String> splitIgnoringParenthesis(String equation, char splitter) {
+    public static ArrayList<String> splitIgnoringParenthesis(String equation) {
         ArrayList<String> strTerms = new ArrayList<>();
         int previousSplit = 0;
         for (int i = 0; i < equation.length(); i++) {
@@ -33,11 +33,16 @@ public class Equation implements Expression{
                     if (equation.charAt(i) == ')') break;
                 }
             } else {
-                if (equation.charAt(i) == splitter) {
+                if (equation.charAt(i) == '-' && i != 0 && equation.charAt(i-1) != '+') {
+                    equation = insert(equation, "+", i);
+                    System.out.println("Equation updated: " + equation);
+                }
+                if (equation.charAt(i) == '+') {
                     String term = equation.substring(previousSplit, i);
                     strTerms.add(term);
                     previousSplit = i+1;
                 }
+                
             }
         }
         String term = equation.substring(previousSplit);
@@ -59,5 +64,11 @@ public class Equation implements Expression{
 
     public Color getColor() {
         return color;
+    }
+
+    public static String insert(String string, String insert, int index) {
+        String bagBegin = string.substring(0,index);
+        String bagEnd = string.substring(index);
+        return bagBegin + insert + bagEnd;
     }
 }

@@ -8,7 +8,7 @@ public class Term implements Expression {
     public Term(String strTerm) {
         System.out.println("Term created: " + strTerm);
 
-        ArrayList<String> strFactors = Equation.splitIgnoringParenthesis(strTerm, '*');
+        ArrayList<String> strFactors = splitIgnoringParenthesis(strTerm);
 
         for (String strFactor : strFactors) {
             factors.add(new Factor(strFactor));
@@ -24,5 +24,31 @@ public class Term implements Expression {
         }
 
         return total;
+    }
+
+    public ArrayList<String> splitIgnoringParenthesis(String equation) {
+        ArrayList<String> strTerms = new ArrayList<>();
+        int previousSplit = 0;
+        for (int i = 0; i < equation.length(); i++) {
+            if (equation.charAt(i) == '(') { //skips through parenthesis
+                while (true) {
+                    i++;
+                    if (equation.charAt(i) == ')') break;
+                }
+            } else {
+                if (equation.charAt(i) == '/') {
+                    equation = equation.substring(0, i) + "*(" + equation.substring(i+1) + ")^(-1)";
+                }
+                if (equation.charAt(i) == '*') {
+                    String term = equation.substring(previousSplit, i);
+                    strTerms.add(term);
+                    previousSplit = i+1;
+                }
+            }
+        }
+        String term = equation.substring(previousSplit);
+        strTerms.add(term);
+
+        return strTerms;
     }
 }
