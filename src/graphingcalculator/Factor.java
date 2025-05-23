@@ -91,10 +91,7 @@ public class Factor implements Expression {
         int previousSplit = 0;
         for (int i = 0; i < equation.length(); i++) {
             if (equation.charAt(i) == '(') { //skips through parenthesis
-                while (true) {
-                    i++;
-                    if (equation.charAt(i) == ')') break;
-                }
+                i = skipParenthesis(equation, i);
             } else {
                 if (equation.charAt(i) == splitter) {
                     String term = equation.substring(previousSplit, i);
@@ -112,5 +109,21 @@ public class Factor implements Expression {
     @Override
     public double evaluate(double x) {
         return expression.evaluate(x); 
+    }
+
+    /**
+     * @param frontParenthesis the index of the parenthesis you want to skip
+     * @return the index where the parenthesis closes
+     */
+    public static int skipParenthesis(String string, int frontParenthesis) {
+        for (int i = frontParenthesis+1; i < string.length(); i++) {
+            if (string.charAt(i) == '(') {
+                i = skipParenthesis(string, i);
+            }
+            else if (string.charAt(i) == ')') {
+                return i;
+            }
+        }
+        throw new RuntimeException("String ended before parenthesis closed");
     }
 }

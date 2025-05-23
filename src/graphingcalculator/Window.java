@@ -7,12 +7,12 @@ import javax.swing.JFrame;
 public class Window extends Canvas {
    
    private int width, height;  
-   private ArrayList<Equation> equations;
+   private ArrayList<Function> equations;
    private JFrame frame;
    
    private double xWindow, yWindow;
 
-   public Window(int width, int height, double xWindow, double yWindow, ArrayList<Equation> equations) {
+   public Window(int width, int height, double xWindow, double yWindow, ArrayList<Function> equations) {
       //initialization
       frame = new JFrame("My Drawing");
       this.width = width;
@@ -35,7 +35,7 @@ public class Window extends Canvas {
          for (int ii = 0; ii < this.width; ii++) { //for each x-value (pixels)
             double X = ii-width/2; //transform to math coordinates
             X /= width/xWindow; //apply window
-            double xValue = equations.get(i).evaluate(X);
+            double xValue = equations.get(i).calculate(X);
             if (Double.isNaN(xValue)) continue;
             double Y = -xValue*(height/yWindow) + height/2; //apply window and transform to math coordinates
             

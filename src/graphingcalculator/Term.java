@@ -31,10 +31,7 @@ public class Term implements Expression {
         int previousSplit = 0;
         for (int i = 0; i < equation.length(); i++) {
             if (equation.charAt(i) == '(') { //skips through parenthesis
-                while (true) {
-                    i++;
-                    if (equation.charAt(i) == ')') break;
-                }
+                i = Factor.skipParenthesis(equation, i);
             } else {
                 if (equation.charAt(i) == '/') {
                     equation = equation.substring(0, i) + "*(" + equation.substring(i+1) + ")^(-1)";
