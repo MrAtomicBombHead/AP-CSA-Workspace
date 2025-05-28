@@ -75,6 +75,19 @@ public class Factor implements Expression {
 
             return;
         }
+
+        //square root
+        if (strFactor.contains("rt")) {
+            ArrayList<String> parts = splitIgnoringParenthesis(strFactor, 'r'); //parts[0] is root, parts[1] is base
+            parts.set(1, parts.get(1).substring(1)); //cut off the t
+            if(parts.get(0).equals("")) {
+                parts.set(0, "2");
+            }
+
+            expression = new Factor(parts.get(1)+"^"+"(1/"+parts.get(0)+")");
+
+            return;
+        }
     }
 
     private boolean canParse(String number) {

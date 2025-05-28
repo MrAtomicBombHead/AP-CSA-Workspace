@@ -18,7 +18,7 @@ public class GraphingCalculator {
 
     
     public static void main(String[] args) {
-        final String[] options = {"Add an equation", "Remove an equation", "Solve for a point", "Change x-window", "Change y-window"};
+        final String[] options = {"Add an equation", "Remove an equation", "Solve for a point", "Change x-window", "Change y-window", "How to use"};
         while (true) {
             int select = JOptionPane.showOptionDialog(null, "Select an option", "GRAPHING CALCULATOR", 1, 3, null, options, null);
 
@@ -38,6 +38,9 @@ public class GraphingCalculator {
                 case 4:
                     changeYWindow();
                     break;
+                case 5:
+                    showUseGuide();
+                    break;
                 default: return;
             }
         }
@@ -45,7 +48,7 @@ public class GraphingCalculator {
 
     private static void addEquation() {
         System.out.println("Adding equation");
-        String equationInput = JOptionPane.showInputDialog(null, "Enter an equation", "GRAPHING CALCULATOR");
+        String equationInput = JOptionPane.showInputDialog(null, "Enter an equation", "GRAPHING CALCULATOR", 1);
         Color color = pickColor();
         Function equation;
         try {            
@@ -95,6 +98,10 @@ public class GraphingCalculator {
         }
     }
 
+    private static void showUseGuide() {
+        JOptionPane.showMessageDialog(null, useGuide, "GRAPHING CALCULATOR", 1);
+    }
+
     private static Function pickEquation() {
         Function[] options = equations.toArray(new Function[0]);
 
@@ -119,4 +126,7 @@ public class GraphingCalculator {
         window.kill();
         window = new Window(500, 500, xWindow, yWindow, equations);
     }
+
+
+    private static final String useGuide = "Enter any equation in any form!\nMultiplication is not implied, so an equation like 2x should be written as 2*x and an equation like (x)(x-2) should be (x)*(x-2).\nPowers should be written as b^e. If either part is more than one thing use parenthesis (b)^(e).\nRoot functions should be written as ert(b). Ex. sqrt(x) is 2rt(x). Square root can be simplified to just rt instead of 2rt.\nSupported functions: sin, cos, tan, log";
 }
