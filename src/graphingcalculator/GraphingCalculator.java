@@ -2,8 +2,6 @@ package graphingcalculator;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
