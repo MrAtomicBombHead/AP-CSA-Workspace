@@ -128,5 +128,5 @@ public class GraphingCalculator {
     }
 
 
-    private static final String useGuide = "Enter any equation in any form!\nMultiplication is not implied, so an equation like 2x should be written as 2*x and an equation like (x)(x-2) should be (x)*(x-2).\nPowers should be written as b^e. If either part is more than one thing use parenthesis (b)^(e).\nRoot functions should be written as ert(b). Ex. sqrt(x) is 2rt(x). Square root can be simplified to just rt instead of 2rt.\nSupported functions: sin, cos, tan, log";
+    private static final String useGuide = "Enter any equation in any form!\nMultiplication is not implied, so an equation like 2x should be written as 2*x and an equation like (x)(x-2) should be (x)*(x-2).\nPowers should be written as b^e. If either part is more than one thing use parenthesis (b)^(e).\nRoot functions should be written as ert(b). Ex. sqrt(x) is 2rt(x). Square root can be simplified to just rt instead of 2rt.\nLog works the same way as root. 2log(x) is log base 2 of x. base 10 log can be simplified to just log. Other supported functions: sin, cos, tan";
 }

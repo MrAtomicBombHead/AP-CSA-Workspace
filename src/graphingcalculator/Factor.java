@@ -63,6 +63,7 @@ public class Factor implements Expression {
         //tangent
         if (strFactor.contains("tan")) {
             Expression contents = new Factor(strFactor.substring(3));
+
             expression = (x) -> Math.tan(contents.evaluate(x));
 
             return;
@@ -70,9 +71,14 @@ public class Factor implements Expression {
 
         //log
         if (strFactor.contains("log")) {
-            Expression contents = new Factor(strFactor.substring(3));
-            expression = (x) -> Math.log10(x);
-
+            ArrayList<String> parts = splitIgnoringParenthesis(strFactor, 'l'); //parts[0] is log, parts[1] is base
+            parts.set(1, parts.get(1).substring(2)); //cut off the og
+            if(parts.get(0).equals("")) {
+                parts.set(0, "10");
+            }
+            Expression contents = new Factor(parts.get(1));
+            Expression base = new Factor(parts.get(0));
+            expression = (x) -> Math.log10(contents.evaluate(x)) / Math.log10(base.evaluate(x));
             return;
         }
 
