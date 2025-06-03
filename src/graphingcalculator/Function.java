@@ -15,8 +15,8 @@ public class Function {
     );
 
     private Color color;
-    private String stringEquation;
-    private Equation equation;
+    private final String stringEquation;
+    private final Equation equation;
 
     public Function(String stringEquation, Color color) {
         this.color = color;
@@ -26,6 +26,10 @@ public class Function {
 
     public double calculate(double x) {
         return equation.evaluate(x);
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
     }
 
     public Color getColor() {

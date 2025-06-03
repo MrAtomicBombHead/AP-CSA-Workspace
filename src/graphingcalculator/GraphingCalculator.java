@@ -16,7 +16,7 @@ public class GraphingCalculator {
 
     
     public static void main(String[] args) {
-        final String[] options = {"Add an equation", "Remove an equation", "Solve for a point", "Change x-window", "Change y-window", "How to use"};
+        final String[] options = {"Add an equation", "Remove an equation", "Solve for a point", "Change x-window", "Change y-window", "Change equation color", "How to use"};
         while (true) {
             int select = JOptionPane.showOptionDialog(null, "Select an option", "GRAPHING CALCULATOR", 1, 3, null, options, null);
 
@@ -37,6 +37,9 @@ public class GraphingCalculator {
                     changeYWindow();
                     break;
                 case 5:
+                    changeEquationColor();
+                    break;
+                case 6:
                     showUseGuide();
                     break;
                 default: return;
@@ -94,6 +97,14 @@ public class GraphingCalculator {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Not a number", "GRAPHING CALCULATOR", 1);
         }
+    }
+
+    private static void changeEquationColor() {
+        Function equation = pickEquation();
+        Color newColor = pickColor();
+
+        equation.setColor(newColor);
+        refreshGraph();
     }
 
     private static void showUseGuide() {
