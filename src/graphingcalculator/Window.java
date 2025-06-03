@@ -6,6 +6,9 @@ import javax.swing.JFrame;
 
 public class Window extends Canvas {
    
+   private final boolean exactDrawMode = false;
+   private final int drawAmount = 50;
+
    private int width, height;  
    private ArrayList<Function> equations;
    private JFrame frame;
@@ -31,15 +34,26 @@ public class Window extends Canvas {
       g.fillRect(width/2, 0, 4, height);//Y-axis
       for (int i = 0; i < equations.size(); i++) { //for each equation
          g.setColor(equations.get(i).getColor()); //set color to chosen line color
-      
-         for (int ii = 0; ii < this.width; ii++) { //for each x-value (pixels)
-            double X = ii-width/2; //transform to math coordinates
-            X /= width/xWindow; //apply window
-            double xValue = equations.get(i).calculate(X);
-            if (Double.isNaN(xValue)) continue;
-            double Y = -xValue*(height/yWindow) + height/2; //apply window and transform to math coordinates
-            
-            g.fillRect(ii, (int)Y, 2, 2); //make a 1x1 rectangle at the point
+         if (exactDrawMode) {
+            for (int ii = 0; ii < this.width; ii++) { //for each x-value (pixels)
+               double X = ii-width/2; //transform to math coordinates
+               X /= width/xWindow; //apply window
+               double xValue = equations.get(i).calculate(X);
+               if (Double.isNaN(xValue)) continue;
+               double Y = -xValue*(height/yWindow) + height/2; //apply window and transform to math coordinates
+               
+               g.fillRect(ii, (int)Y, 2, 2); //make a 1x1 rectangle at the point
+            }
+         } else {
+            for (int ii = 0; ii < this.width * drawAmount; ii++) {
+               double X = ii-width/2*drawAmount; //transform to math coordinates
+               X /= width/xWindow*drawAmount; //apply window
+               double xValue = equations.get(i).calculate(X);
+               if (Double.isNaN(xValue)) continue;
+               double Y = -xValue * (height/yWindow) + height/2; //apply window and transform to math coordinates
+
+               g.fillRect(Math.round(ii/(float)drawAmount), (int)Y, 2, 2); //make a 1x1 rectangle at the point
+            }
          }
       }
    }
